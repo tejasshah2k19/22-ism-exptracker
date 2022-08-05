@@ -1,0 +1,50 @@
+heroku deployment :- 
+
+signup
+login
+create project in heroku 
+install heroku cli 
+type heroku in cmd
+
+now execute command 
+	heroku login 
+
+ 	heroku git add 
+	git push heroku master 
+	heroku open 
+
+it will open your remote url 
+https://exp-tracker-22.herokuapp.com/
+
+now you can acess your url with remote url 
+https://exp-tracker-22.herokuapp.com/signup 
+
+if you net get your url and got error , then run 
+	heroku logs --tail 
+
+above command will help you to identify the errors 
+if we got H14 - no web process running
+
+then we need to add 1 file 
+	filename => Procfile  [ note : we dont have any extension in this file name ]
+create Procfile in root directory of yr project and copy paste below line. 
+
+web: java -Dserver.port=$PORT -jar target/*.war
+
+now 
+	git add Procfile
+	git commit -m "proc" Procfile 
+	git push heroku master 
+
+	now check your project is running.....
+
+
+
+
+
+
+
+
+
+ 
+
