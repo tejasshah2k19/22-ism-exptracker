@@ -10,4 +10,9 @@ public class SessionController {
 	public String signup() {
 		return "Signup";
 	}
+
+	@GetMapping("/")
+	public String home() {
+		return "Home";
+	}
 }
