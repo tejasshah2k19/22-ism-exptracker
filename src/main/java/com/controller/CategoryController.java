@@ -2,38 +2,68 @@ package com.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bean.CategoryBean;
+import com.repository.CategoryRepository;
 
 @RestController
 public class CategoryController {
 
-	@GetMapping("/categories")
-	public List<CategoryBean> getAllCategories(){
-		
-		
-		List<CategoryBean> categories = new ArrayList<CategoryBean>();
-		CategoryBean c1 = new CategoryBean();
-		c1.setCategoryId(1);
-		c1.setCategoryName("automobile");
-		
-		CategoryBean c2 = new CategoryBean();
-		c2.setCategoryId(2);
-		c2.setCategoryName("grocery");
-		
-		
-		CategoryBean c3 = new CategoryBean();
-		c3.setCategoryId(3);
-		c3.setCategoryName("food");
-		
-		
-		categories.add(c1);
-		categories.add(c2);
-		categories.add(c3); 
-		
-		return categories;
+	@Autowired
+	CategoryRepository categoryRepo;
+
+	@GetMapping("/category")
+	public ResponseEntity<?> getAllCategories() {
+
+		List<CategoryBean> categories = categoryRepo.findAll();
+		return ResponseEntity.ok(categories);
+	}
+
+	@PostMapping("/category")
+	public ResponseEntity<?> addCategory(@RequestBody CategoryBean category) {
+		categoryRepo.save(category);
+		return ResponseEntity.ok(category);
+
+	}
+
+	@GetMapping("/category/{categoryId}")
+	public ResponseEntity<?> getCategoryDetail(@PathVariable("categoryId") Integer categoryId) {
+		Optional<CategoryBean> categoryOptional = categoryRepo.findById(categoryId);
+		if (categoryOptional.isPresent()) {
+			CategoryBean category = categoryOptional.get();
+			return ResponseEntity.ok(category);
+		} else {
+			return ResponseEntity.unprocessableEntity().build();
+		}
+	}
+
+	@DeleteMapping("/category/{categoryId}")
+	public ResponseEntity<?> deleteCategory(@PathVariable("categoryId") Integer categoryId) {
+		Optional<CategoryBean> categoryOptional = categoryRepo.findById(categoryId);
+		if (categoryOptional.isPresent()) {
+			CategoryBean category = categoryOptional.get();
+			categoryRepo.delete(category);
+			return ResponseEntity.ok(category);
+		} else {
+			return ResponseEntity.unprocessableEntity().build();
+		}
+	}
+
+	@PutMapping("/category")
+	public ResponseEntity<?> updateCategory(@RequestBody CategoryBean category) {
+		categoryRepo.save(category);
+		return ResponseEntity.ok(category);
+
 	}
 }

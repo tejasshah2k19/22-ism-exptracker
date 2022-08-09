@@ -1,15 +1,27 @@
 package com.bean;
 
-public class CategoryBean {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	int categoryId;
+@Entity // table
+@Table(name = "category")
+public class CategoryBean {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	Integer categoryId;
+
+//	@Column(name = "cname",length = 50,unique = true,nullable = false)
 	String categoryName;
 
-	public int getCategoryId() {
+	public Integer getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
 

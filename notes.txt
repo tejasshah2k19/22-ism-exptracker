@@ -39,6 +39,47 @@ now
 	now check your project is running.....
 
 
+now open heroku resources tab click on pg database -> it wil open new page -> 
+where you get all the db credentials. 
+modify in application.properties with live db credentials. 
+
+now again git commit and heroku push so it re-deplo app with latest changes. 
+
+
+now lets learn how to create table in live db ? 
+pgadmin -> heroku db --> connect 
+
+
+--------------------------------------------
+sts -> 
+web*
+
+devtools
+pg driver 
+spring data jpa  [ jdbc ] 
+
+
+1) crud 
+2) mapping
+3) mapping using inheritance 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
