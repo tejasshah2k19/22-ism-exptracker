@@ -63,6 +63,11 @@ spring data jpa  [ jdbc ]
 2) mapping
 3) mapping using inheritance 
 
+--------------------------------------------
+mapping 
+relation
+
+
 
 
 
