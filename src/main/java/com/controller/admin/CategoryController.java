@@ -1,6 +1,5 @@
-package com.controller;
+package com.controller.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,12 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bean.CategoryBean;
 import com.repository.CategoryRepository;
 
 @RestController
+@RequestMapping("/admin")
 public class CategoryController {
 
 	@Autowired
@@ -36,6 +37,10 @@ public class CategoryController {
 		return ResponseEntity.ok(category);
 
 	}
+
+	// ? @RequestParam
+
+	// category?categoryId=1
 
 	@GetMapping("/category/{categoryId}")
 	public ResponseEntity<?> getCategoryDetail(@PathVariable("categoryId") Integer categoryId) {
