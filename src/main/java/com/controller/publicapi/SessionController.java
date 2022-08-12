@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,9 @@ public class SessionController {
 
 	@Autowired
 	AccountRepository accountRepo;
+	
+	@Autowired
+	BCryptPasswordEncoder bcrypt;
 
 	@PostMapping("/signup")
 	public ResponseEntity<ResponseBean<UserBean>> signup(@RequestBody UserBean user) {
@@ -45,6 +49,8 @@ public class SessionController {
 		if (dbUser == null) {
 			RoleBean role = roleRepo.findByRoleName("user");
 			user.setRole(role);
+ 			String encPassword = bcrypt.encode(user.getPassword()); 
+			user.setPassword(encPassword);
 			userRepo.save(user);
 
 			AccountBean account = new AccountBean();
@@ -72,7 +78,8 @@ public class SessionController {
 		UserBean dbUser = userRepo.findByEmail(login.getEmail());
 		//ram@ram.com ram --> sfesfsdsdr4wrwewf4wefewr --> ram  
 		//ram -> 3ew3dsdsfddssfsdfs
-		if (dbUser == null || !dbUser.getPassword().equals(login.getPassword())) {
+ 
+		if (dbUser == null ||   bcrypt.matches(login.getPassword(), dbUser.getPassword())  == false ) {
 			ResponseBean<LoginBean> res = new ResponseBean<>();
 			res.setData(login);
 			res.setMsg("Invalid Credentials");
