@@ -3,10 +3,9 @@ package com.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bean.UserBean;
+import com.bean.AccountBean;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserBean, Integer> {
+public interface AccountRepository extends CrudRepository<AccountBean, Integer> {
 
-	UserBean findByEmail(String email);
 }

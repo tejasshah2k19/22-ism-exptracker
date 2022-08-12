@@ -1,13 +1,20 @@
 package com.bean;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -18,12 +25,16 @@ public class UserBean {
 
 	String firstName;
 	String email;
+
 	String password;
 	String gender;
 
 	@ManyToOne
 	@JoinColumn(name = "roleId", nullable = false)
 	RoleBean role;
+
+	@OneToMany(mappedBy = "user")
+	Set<AccountBean> accounts = new HashSet<>();
 
 	public Integer getUserId() {
 		return userId;
@@ -71,6 +82,14 @@ public class UserBean {
 
 	public void setRole(RoleBean role) {
 		this.role = role;
+	}
+
+	public Set<AccountBean> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<AccountBean> accounts) {
+		this.accounts = accounts;
 	}
 
 }

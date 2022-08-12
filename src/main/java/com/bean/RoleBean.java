@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "role")
 public class RoleBean {
@@ -21,6 +23,7 @@ public class RoleBean {
 	@Column(length = 15, nullable = false, unique = true)
 	String roleName;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "role")
 	Set<UserBean> users;
 

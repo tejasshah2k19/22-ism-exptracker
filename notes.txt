@@ -67,12 +67,60 @@ spring data jpa  [ jdbc ]
 mapping 
 relation
 
+-----------------
+1) 
+
+1st time 
+git init 
+git add remote origin 
+add
+commit
+push
+
+ABC: pull 
+
+
+DEF : changes 
+add,commit,push 
+
+
+2)
+1st time 
+git clone https://github.com/tejasshah2k19/ism-web-2022.git
+sts -> file -> import ->existing maven project -> browse -> 
+do right click on project -> maven update project with force option 
+
+ABC : changes 
+add - commit - push 
+
+
+DEF : pull 
+ 
 
 
 
 
+User
 
+@ManyToOne
+@JoinColumn(name="roleId")
+RoleBean role; 
 
+Role 
+	@OneToMany(mappedBy="role") 
+	Set<UserBean> users;
+	
+	
+	
+User 
+	@OneToMany(mappedBy="user") 
+	Set<AccountBean> accounts; 
+	
+Account 
+	
+	@ManyToOne
+	@JoinColumn(name="userId")
+	UserBean user; 
 
 
 
