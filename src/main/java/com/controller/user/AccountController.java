@@ -1,7 +1,5 @@
 package com.controller.user;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +24,7 @@ public class AccountController {
 		System.out.println(account.getUser());
 		System.out.println(account.getUser().getUserId());
 		
-		//accountRepo.save(account);
+		accountRepo.save(account);
 		
 		ResponseBean<AccountBean> res = new ResponseBean<>();
 		res.setData(account);

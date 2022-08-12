@@ -23,10 +23,10 @@ public class AccountBean {
 	// String accountType;
 //	detail - upi cc dc 
 
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "userId", nullable = false)
-	UserBean user;
+	UserBean user = new UserBean();
 	
 	
 	public Integer getAccountId() {

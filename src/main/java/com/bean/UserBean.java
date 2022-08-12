@@ -33,6 +33,7 @@ public class UserBean {
 	@JoinColumn(name = "roleId", nullable = false)
 	RoleBean role;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	Set<AccountBean> accounts = new HashSet<>();
 
