@@ -21,6 +21,7 @@ import com.bean.UserBean;
 import com.repository.AccountRepository;
 import com.repository.RoleRepository;
 import com.repository.UserRepository;
+import com.service.TokenService;
 
 @RestController
 @RequestMapping("/public")
@@ -34,9 +35,12 @@ public class SessionController {
 
 	@Autowired
 	AccountRepository accountRepo;
-	
+
 	@Autowired
 	BCryptPasswordEncoder bcrypt;
+
+	@Autowired
+	TokenService tokenService;
 
 	@PostMapping("/signup")
 	public ResponseEntity<ResponseBean<UserBean>> signup(@RequestBody UserBean user) {
@@ -49,7 +53,7 @@ public class SessionController {
 		if (dbUser == null) {
 			RoleBean role = roleRepo.findByRoleName("user");
 			user.setRole(role);
- 			String encPassword = bcrypt.encode(user.getPassword()); 
+			String encPassword = bcrypt.encode(user.getPassword());
 			user.setPassword(encPassword);
 			userRepo.save(user);
 
@@ -76,17 +80,17 @@ public class SessionController {
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticate(@RequestBody LoginBean login) {
 		UserBean dbUser = userRepo.findByEmail(login.getEmail());
-		//ram@ram.com ram --> sfesfsdsdr4wrwewf4wefewr --> ram  
-		//ram -> 3ew3dsdsfddssfsdfs
- 
-		if (dbUser == null ||   bcrypt.matches(login.getPassword(), dbUser.getPassword())  == false ) {
+		// ram@ram.com ram --> sfesfsdsdr4wrwewf4wefewr --> ram
+		// ram -> 3ew3dsdsfddssfsdfs
+
+		if (dbUser == null || bcrypt.matches(login.getPassword(), dbUser.getPassword()) == false) {
 			ResponseBean<LoginBean> res = new ResponseBean<>();
 			res.setData(login);
 			res.setMsg("Invalid Credentials");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(res);
 		} else {
-			//temp bean -> UserAccount --> fields -> account create 
-			
+			// temp bean -> UserAccount --> fields -> account create
+
 //			List<AccountBean> accounts = accountRepo.findByUser(dbUser.getUserId());
 //			ResponseBean<List<Object>> res = new ResponseBean<>();
 //			List<Object> list = new ArrayList<Object>();
@@ -96,10 +100,13 @@ public class SessionController {
 //			res.setMsg("Login done...");
 //			return ResponseEntity.ok(res);
 
+			String authToken = tokenService.generateToken(16);
+			dbUser.setAuthToken(authToken);
+			userRepo.save(dbUser);
+			
 			List<AccountBean> accounts = accountRepo.findByUser(dbUser.getUserId());
-
-			ResponseBean<Map<String,Object>> res = new ResponseBean<>();
-			Map<String,Object> data = new HashMap<String,Object>();
+			ResponseBean<Map<String, Object>> res = new ResponseBean<>();
+			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("user", dbUser);
 			data.put("accounts", accounts);
 			res.setData(data);

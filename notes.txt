@@ -224,8 +224,23 @@ removed
 		 		1
 		 		2
 		
+----------------------------------------------------------------------------------------
+
+user --> api --> access | login 
+
+	secured 
+		/user
+		/admin
+	public 
+		/public 
 		
 		
+incoming request --> check --> secured? 
+									user authenticated and authorized 
+									check for the authtoken  
+									
+									data 
+									header 
 		
 
 

@@ -37,6 +37,8 @@ public class UserBean {
 	@OneToMany(mappedBy = "user")
 	Set<AccountBean> accounts = new HashSet<>();
 
+	String authToken;
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -91,6 +93,14 @@ public class UserBean {
 
 	public void setAccounts(Set<AccountBean> accounts) {
 		this.accounts = accounts;
+	}
+
+	public String getAuthToken() {
+		return authToken;
+	}
+
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
 	}
 
 }
