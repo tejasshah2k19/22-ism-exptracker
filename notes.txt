@@ -122,11 +122,111 @@ Account
 	@JoinColumn(name="userId")
 	UserBean user; 
 
+---------------------------------------------------------------------------------
 
 
+String 			varchar / varchar2
+int				integer , big int , 
+
+dialect 
 
 
+1) core interfaces ? 
 
+	Configuration
+	SessionFactory
+	Session
+	Transaction 
+	Query
+	Criteria 
+	
+
+* save() vs persist() 
+
+save -> this method will return an id 
+persist -> this method will not return 
+
+save -> public Serializable save(Object o) 
+persist -> public void persist(Object o) 
+	
+	
+	
+*get()  and load() 
+    		get									load
+	if id is not present				if id is not present 
+	it return null						it throws an Exception [ ObjectNotFoundException] 
+	
+	not sure -> present?				sure -> present 
+	 
+	database							proxy object 
+
+
+hibernate object --> states --> 
+
+transient 
+persistent 
+detached 
+removed 
+
+
+	first level 					second level 
+	
+	Session							SessionFactory
+	its default						not enabled 
+	
+	
+	
+	
+	EH Cache -> read only, nonstrict r and w ,read-write,
+	OS Cache -> same as eh 
+	Swarm Cache ->  1,2
+	JBoss Cache -> 0,0,0,transcational support  
+	
+   <property name="hibernate.cache.use_second_level_cache" value="true"/>
+	<property name="hibernate.cache.region.factory_class" 
+      value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>   
+
+-----------------------------------------------------------------------------------------
+	BFilter 
+	TFilter 
+	AFilter 
+	
+	*generator in hibernate 
+	increment -> [ int , shot , long ] 
+	
+	sequence -> oracle ,pg 
+				create sequence user_seq start with 10 increment by 10; 
+	identity -> MySql , MssQl 
+			 		1,2,3,4,5 
+	
+	native -> identity , sequence , ...... 
+	
+	uuid   -> ip based --> hexadecimal string -> 32   
+	
+	guid --> 
+	
+	select --> 
+	
+	foreign --> 
+	
+		ont to one 
+		
+		user and userprofile 
+		
+		
+		user 
+		userid:pk
+		1
+		2
+		
+		   userprofile
+		    userid:pk[fk]  adhar profile 
+		 		1
+		 		2
+		
+		
+		
+		
 
 
 
