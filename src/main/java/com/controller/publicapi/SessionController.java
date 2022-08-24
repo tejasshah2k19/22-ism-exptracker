@@ -26,7 +26,7 @@ import com.service.TokenService;
 
 @RestController
 @RequestMapping("/public")
-@CrossOrigin
+
 public class SessionController {
 
 	@Autowired

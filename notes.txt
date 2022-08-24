@@ -244,6 +244,10 @@ incoming request --> check --> secured?
 		
 
 
+application.properties 
+
+
+class - table 
 
 
 

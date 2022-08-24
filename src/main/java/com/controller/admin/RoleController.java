@@ -1,5 +1,7 @@
 package com.controller.admin;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +18,6 @@ import com.repository.RoleRepository;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(allowedHeaders = "*")
 public class RoleController {
 
 	@Autowired
@@ -39,11 +40,29 @@ public class RoleController {
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().build();
 		}
-		return ResponseEntity.ok("Role Removed");
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/role")
 	public ResponseEntity<?> getAllRoles() {
+		System.out.println("role sent.............");
 		return ResponseEntity.ok(roleRepo.findAll());
 	}
+
+	@GetMapping("/role/{roleId}")
+	public ResponseEntity<?> getRoleById(@PathVariable("roleId") Integer roleId) {
+		try {
+			Optional<RoleBean> optional = roleRepo.findById(roleId);
+			if (optional.isPresent()) {
+				RoleBean role = optional.get();
+				return ResponseEntity.ok(role);
+			} else {
+				return ResponseEntity.badRequest().build();
+			}
+
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
 }

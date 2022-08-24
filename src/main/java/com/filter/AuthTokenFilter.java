@@ -13,44 +13,50 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-@Component
+ 
 public class AuthTokenFilter implements Filter {
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest reqx, ServletResponse resx, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest req = ((HttpServletRequest) (request));
+		HttpServletRequest request = ((HttpServletRequest) (reqx));
 
-		String url = req.getRequestURL().toString();
+		String url = request.getRequestURL().toString();
 
 		System.out.println("incoming url ---> " + url);
+//		Enumeration<String> allHeaders = request.getHeaderNames();
+//		System.out.println("***************");
+//		while (allHeaders.hasMoreElements()) {
+//			String hName = allHeaders.nextElement();
+//			System.out.println(hName+" => "+request.getHeader(hName));
+//		}
+//		System.out.println("***************");
 
 		if (url.contains("/public/")) {
-			chain.doFilter(request, response);// goahed
+			chain.doFilter(reqx, resx);// goahed
 		} else {
 			// token - authentication
 
-			Enumeration<String> allHeaders = req.getHeaderNames();
-			System.out.println("all headers");
-			while (allHeaders.hasMoreElements()) {
-				System.out.println(allHeaders.nextElement());
-			}
-			System.out.println("***************");
+//			while (allHeaders.hasMoreElements()) {
+//				String hName = allHeaders.nextElement();
+//				System.out.println(hName+" => "+request.getHeader(hName));
+//			}
+//			System.out.println("***************");
 
-			String authToken = req.getHeader("authToken");
+			String authToken = request.getHeader("authToken");
 			System.out.println("authToken => " + authToken);
 			if (authToken == null || authToken.trim().length() != 16) {
 
 				System.out.println("token verification failed.......");
-				HttpServletResponse resp = ((HttpServletResponse) response);
-				resp.setContentType("application/json");
-				resp.setStatus(401);
-				resp.getWriter().write("{'msg':'Please Login before access service'}");
+				HttpServletResponse response = ((HttpServletResponse) resx);
+				response.setContentType("application/json");
+				response.setStatus(401);
+				response.getWriter().write("{'msg':'Please Login before access service'}");
 			} else {
 				// token -> db user ?
 				System.out.println("user verfied....");
-				chain.doFilter(request, response);// go ahead
+				chain.doFilter(reqx, resx);// go ahead -> { Filter , Controller }
 			}
 
 		}
