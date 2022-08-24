@@ -1,6 +1,7 @@
 package com.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -29,17 +30,26 @@ public class AuthTokenFilter implements Filter {
 			chain.doFilter(request, response);// goahed
 		} else {
 			// token - authentication
+
+			Enumeration<String> allHeaders = req.getHeaderNames();
+			System.out.println("all headers");
+			while (allHeaders.hasMoreElements()) {
+				System.out.println(allHeaders.nextElement());
+			}
+			System.out.println("***************");
+
 			String authToken = req.getHeader("authToken");
+			System.out.println("authToken => " + authToken);
 			if (authToken == null || authToken.trim().length() != 16) {
-				
-				
+
+				System.out.println("token verification failed.......");
 				HttpServletResponse resp = ((HttpServletResponse) response);
 				resp.setContentType("application/json");
 				resp.setStatus(401);
 				resp.getWriter().write("{'msg':'Please Login before access service'}");
 			} else {
-				//token -> db user ? 
-				
+				// token -> db user ?
+				System.out.println("user verfied....");
 				chain.doFilter(request, response);// go ahead
 			}
 

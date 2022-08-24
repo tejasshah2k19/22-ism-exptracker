@@ -9,4 +9,5 @@ import com.bean.UserBean;
 public interface UserRepository extends CrudRepository<UserBean, Integer> {
 
 	UserBean findByEmail(String email);
+	UserBean findByAuthToken(String authToken);
 }

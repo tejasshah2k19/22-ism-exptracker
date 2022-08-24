@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import com.service.TokenService;
 
 @RestController
 @RequestMapping("/public")
+@CrossOrigin
 public class SessionController {
 
 	@Autowired
@@ -79,7 +81,7 @@ public class SessionController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticate(@RequestBody LoginBean login) {
-		UserBean dbUser = userRepo.findByEmail(login.getEmail());
+		UserBean dbUser = userRepo.findByEmail(login.getEmail());//25second
 		// ram@ram.com ram --> sfesfsdsdr4wrwewf4wefewr --> ram
 		// ram -> 3ew3dsdsfddssfsdfs
 
