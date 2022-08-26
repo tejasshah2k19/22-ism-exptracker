@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
- 
+@Component
 public class AuthTokenFilter implements Filter {
 
 	@Override
@@ -25,6 +25,7 @@ public class AuthTokenFilter implements Filter {
 		String url = request.getRequestURL().toString();
 
 		System.out.println("incoming url ---> " + url);
+		System.out.println("method ---> " + request.getMethod());
 //		Enumeration<String> allHeaders = request.getHeaderNames();
 //		System.out.println("***************");
 //		while (allHeaders.hasMoreElements()) {
@@ -32,8 +33,9 @@ public class AuthTokenFilter implements Filter {
 //			System.out.println(hName+" => "+request.getHeader(hName));
 //		}
 //		System.out.println("***************");
-
-		if (url.contains("/public/")) {
+// || url.contains("/admin/")
+		if (url.contains("/public/") || request.getMethod().toLowerCase().equals("options")) {
+			System.out.println("options by pass....");
 			chain.doFilter(reqx, resx);// goahed
 		} else {
 			// token - authentication

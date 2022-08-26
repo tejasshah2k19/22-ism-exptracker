@@ -12,10 +12,10 @@ import javax.persistence.Table;
 public class CategoryBean {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer categoryId;
+	private Integer categoryId;
 
 //	@Column(name = "cname",length = 50,unique = true,nullable = false)
-	String categoryName;
+	private String categoryName;
 
 	public Integer getCategoryId() {
 		return categoryId;

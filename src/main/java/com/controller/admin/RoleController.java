@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +64,16 @@ public class RoleController {
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().build();
 		}
+	}
+
+	@PutMapping("/role")
+	public ResponseEntity<?> updateRole(@RequestBody RoleBean role) {
+		try {
+			roleRepo.save(role);
+		} catch (Exception e) {
+			return ResponseEntity.unprocessableEntity().build();
+		}
+		return ResponseEntity.ok(role);
 	}
 
 }
