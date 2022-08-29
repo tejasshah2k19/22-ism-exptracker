@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bean.AccountBean;
 import com.bean.ResponseBean;
 import com.repository.AccountRepository;
+import com.repository.UserRepository;
 
 @RestController
 @RequestMapping("/user")
@@ -24,6 +26,9 @@ public class AccountController {
 	@Autowired
 	AccountRepository accountRepo;
 
+	@Autowired
+	UserRepository userRepo;
+	
 	@PostMapping("/account")
 	public ResponseEntity<?> addAccount(@RequestBody AccountBean account) {
 
@@ -49,4 +54,24 @@ public class AccountController {
 		res.setMsg("accountr retrieved..");
 		return ResponseEntity.ok(res);
 	}
+	
+	@PutMapping("/account")
+	public ResponseEntity<?> updateAccount(@RequestBody AccountBean account) {
+
+//		System.out.println(account.getUser());
+		AccountBean dbAccountBean = accountRepo.findById(account.getAccountId()).get();
+		dbAccountBean.setBalance(account.getBalance());
+		System.out.println(dbAccountBean.getAccountId());
+		System.out.println(dbAccountBean.getBalance());
+		System.out.println(dbAccountBean.getUser().getUserId());
+//		user
+		accountRepo.save(dbAccountBean);
+
+		ResponseBean<AccountBean> res = new ResponseBean<>();
+		res.setData(account);
+		res.setMsg("account modified");
+
+		return ResponseEntity.ok(res);
+	}
+	
 }
